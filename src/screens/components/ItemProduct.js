@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import FontAwesom from 'react-native-vector-icons/FontAwesome';
 
-const ItemProduct = ({product}) => {
+const ItemProduct = ({product, addTotalPrice, removeTotalPrice}) => {
     const [itemCount, setItemCount] = useState(0);
 
     const addItem = () => {
@@ -10,6 +10,7 @@ const ItemProduct = ({product}) => {
             return;
         } else {
             setItemCount(itemCount + 1);
+            addTotalPrice();
         }
     }
 
@@ -18,6 +19,7 @@ const ItemProduct = ({product}) => {
             return;
         } else {
             setItemCount(itemCount - 1);
+            removeTotalPrice();
         }
     }
     
@@ -28,11 +30,11 @@ const ItemProduct = ({product}) => {
                 <Text>{`$ ${product.price}`}</Text>
             </View>
             <View style={styles.itemCount}>
-                <TouchableOpacity onPress={() => removeItem()}>
+                <TouchableOpacity style={{marginLeft: 5}} onPress={() => removeItem()}>
                     <FontAwesom name={'minus-square'} size={34} style={{ color: (itemCount <=  0) ? '#cfcfcf' : '#394144' }} />
                 </TouchableOpacity>
                 <Text style={{ marginHorizontal: '10%', marginTop: 7 }}>{itemCount}</Text>
-                <TouchableOpacity onPress={() => addItem()}>
+                <TouchableOpacity style={{marginRight: 5}} onPress={() => addItem()}>
                     <FontAwesom name={'plus-square'} size={34} style={{ color: (itemCount >=  product.stock) ? '#cfcfcf' :'#394144' }} />
                 </TouchableOpacity>
             </View>
@@ -45,7 +47,9 @@ const styles = StyleSheet.create({
         borderWidth: 0.1,
         flexDirection: 'row',
         flexWrap: 'wrap',
-        alignItems: 'flex-start'
+        alignItems: 'flex-start',
+        backgroundColor: '#fff',
+        zIndex: 0
     },
     itemTitle: {
         // alignItems: 'center',
